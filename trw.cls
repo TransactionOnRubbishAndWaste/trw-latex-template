@@ -7,7 +7,6 @@
 % Required packages
 \RequirePackage{geometry}
 \RequirePackage{fancyhdr}
-\RequirePackage{titlesec}
 \RequirePackage{hyperref}
 \RequirePackage{xcolor}
 
@@ -34,10 +33,19 @@
 \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}
 
 % Section styling
-\titleformat{\section}{\large\bfseries\color{trwblue}}{\thesection}{1em}{}
-\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}%
+  {2.3ex \@plus.2ex}%
+  {\normalfont\large\bfseries\color{trwblue}}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
 
 % Title customization
+\def\@affiliation{}
+\newcommand{\affiliation}[1]{\gdef\@affiliation{#1}}
+
 \renewcommand{\@maketitle}{%
   \begin{center}
     {\LARGE\bfseries\color{trwblue} \@title \par}
@@ -47,18 +55,9 @@
     {\small\textcolor{trwgray}{\@affiliation} \par}
     \vskip 2em
   \end{center}
-  \begin{abstract}
-  \noindent\small
-  \@abstract
-  \end{abstract}
   \par\noindent\footnotesize
-  \textcolor{trwgray}{\textbf{⚠️ Disclaimer:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously. If you cite this in a real paper, that's on you. No actual science was harmed.}
-  \par\vskip 2em
+  \textcolor{trwgray}{\textbf{WARNING: Disclaimer:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}\par\vskip 2em
 }
-
-% New commands
-\newcommand{\affiliation}[1]{\gdef\@affiliation{#1}}
-\newcommand{\keywords}[1]{\gdef\@keywords{#1}}
 
 % Hyperref setup
 \hypersetup{
