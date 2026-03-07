@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{trw}[2026/03/07 v0.0.2 Transaction on Rubbish and Waste]
+\ProvidesClass{trw}[2026/03/07 v0.0.3 Transaction on Rubbish and Waste]
 
 % Load base class
 \LoadClass[twocolumn,a4paper,10pt]{article}
@@ -43,14 +43,23 @@
   \gdef\@journaldate{#4}%
 }
 
-% Header/Footer
+% Header/Footer with odd/even page support
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\footnotesize\textcolor{trwblue}{\@journalname}}
-\fancyhead[C]{\footnotesize\textcolor{trwgray}{Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}
-\fancyhead[R]{\footnotesize\textcolor{trwgray}{\thepage}}
+
+% Odd pages (right hand): journal name left, page number right
+\fancyhead[LO]{\footnotesize\textcolor{trwblue}{\@journalname}}
+\fancyhead[RO]{\footnotesize\textcolor{trwgray}{\thepage}}
+
+% Even pages (left hand): page number left, journal info right
+\fancyhead[LE]{\footnotesize\textcolor{trwgray}{\thepage}}
+\fancyhead[RE]{\footnotesize\textcolor{trwblue}{Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}
+
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}
+
+% Enable different headers for odd/even pages
+\fancyheadoffset{0pt}
 
 % Section styling
 \renewcommand{\section}{\@startsection{section}{1}{\z@}%
@@ -82,8 +91,8 @@
 }
 
 \renewcommand{\@maketitle}{%
-  % Journal header on first page
-  \thispagestyle{fancy}
+  % Force fancy style on first page too
+  \thispagestyle{fancy}%
   \begin{center}
     {\LARGE\bfseries\color{trwblue} \@title \par}
     \vskip 1.5em
