@@ -1,16 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{trw}[2026/03/07 v0.0.3 Transaction on Rubbish and Waste]
 
-% Load base class
-\LoadClass[twocolumn,a4paper,10pt]{article}
+% Load base class with twoside for odd/even pages
+\LoadClass[twocolumn,a4paper,10pt,twoside]{article}
 
 % Required packages
 \RequirePackage{geometry}
 \RequirePackage{fancyhdr}
 \RequirePackage{xcolor}
 \RequirePackage[numbers,sort&compress]{natbib}
-
-% Graphics and tables
 \RequirePackage{graphicx}
 \RequirePackage{booktabs}
 \RequirePackage{caption}
@@ -18,7 +16,6 @@
 % TRW colors
 \definecolor{trwblue}{RGB}{52, 152, 219}
 \definecolor{trwgray}{RGB}{127, 140, 141}
-\definecolor{trwlight}{RGB}{236, 240, 241}
 
 % Page layout
 \geometry{
@@ -30,7 +27,7 @@
   columnsep=0.8cm
 }
 
-% Journal info (customizable)
+% Journal info
 \def\@journalname{TRANSACTION ON RUBBISH AND WASTE}
 \def\@journalvolume{1}
 \def\@journalnumber{1}
@@ -42,24 +39,6 @@
   \gdef\@journalnumber{#3}%
   \gdef\@journaldate{#4}%
 }
-
-% Header/Footer with odd/even page support
-\pagestyle{fancy}
-\fancyhf{}
-
-% Odd pages (right hand): journal name left, page number right
-\fancyhead[LO]{\footnotesize\textcolor{trwblue}{\@journalname}}
-\fancyhead[RO]{\footnotesize\textcolor{trwgray}{\thepage}}
-
-% Even pages (left hand): page number left, journal info right
-\fancyhead[LE]{\footnotesize\textcolor{trwgray}{\thepage}}
-\fancyhead[RE]{\footnotesize\textcolor{trwblue}{Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}
-
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}
-
-% Enable different headers for odd/even pages
-\fancyheadoffset{0pt}
 
 % Section styling
 \renewcommand{\section}{\@startsection{section}{1}{\z@}%
@@ -83,38 +62,68 @@
   {\begin{center}\small\textbf{Abstract}\end{center}\begin{quote}\small}
   {\end{quote}}
 
-% Figure and table captions
+% Caption styling
 \captionsetup{
   labelfont={color=trwblue,bf},
   textfont={color=trwgray},
   labelsep=colon
 }
 
-\renewcommand{\@maketitle}{%
-  % Force fancy style on first page too
-  \thispagestyle{fancy}%
-  \begin{center}
-    {\LARGE\bfseries\color{trwblue} \@title \par}
-    \vskip 1.5em
-    {\large \@author \par}
-    \vskip 1em
-    {\small\textcolor{trwgray}{\@affiliation} \par}
-    \vskip 2em
-  \end{center}
-  \@abstract
-  \ifx\@keywords\empty\else
-    \par\vskip 1em
-    \noindent\footnotesize\textcolor{trwgray}{\textbf{Keywords:} \@keywords}
-  \fi
-  \par\vskip 1em
-  \noindent\footnotesize
-  \textcolor{trwgray}{\textbf{WARNING:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}\par\vskip 2em
+% Setup headers for normal pages (odd/even)
+\def\trw@setupheaders{%
+  \fancyhf{}%
+  % Odd pages: journal name left, page number right
+  \fancyhead[LO]{\footnotesize\textcolor{trwblue}{\@journalname}}%
+  \fancyhead[RO]{\footnotesize\textcolor{trwgray}{\thepage}}%
+  % Even pages: page number left, journal name + vol info right
+  \fancyhead[LE]{\footnotesize\textcolor{trwgray}{\thepage}}%
+  \fancyhead[RE]{\footnotesize\textcolor{trwblue}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}%
 }
 
-% Bibliography style
+% First page style: page number left, journal info right (same as even page)
+\fancypagestyle{firstpage}{%
+  \fancyhf{}%
+  \fancyhead[L]{\footnotesize\textcolor{trwgray}{\thepage}}%
+  \fancyhead[R]{\footnotesize\textcolor{trwblue}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}%
+}
+
+% Setup headers globally
+\trw@setupheaders
+\pagestyle{fancy}
+
+% Redefine maketitle
+\def\@maketitle{%
+  \newpage
+  \trw@setupheaders
+  \thispagestyle{firstpage}%
+  \vspace*{2em}%
+  \begin{center}%
+    {\LARGE\bfseries\color{trwblue} \@title \par}%
+    \vskip 1.5em%
+    {\large \@author \par}%
+    \vskip 1em%
+    {\small\textcolor{trwgray}{\@affiliation} \par}%
+    \vskip 2em%
+  \end{center}%
+  \@abstract
+  \ifx\@keywords\empty\else
+    \par\vskip 1em%
+    \noindent\footnotesize\textcolor{trwgray}{\textbf{Keywords:} \@keywords}%
+  \fi
+  \par\vskip 1em%
+  \noindent\footnotesize%
+  \textcolor{trwgray}{\textbf{WARNING:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}%
+  \par\vskip 2em%
+}
+
+% Bibliography
 \bibliographystyle{ieeetr}
 
-% Hyperref (load last)
+% Hyperref
 \RequirePackage{hyperref}
 \hypersetup{
   colorlinks=true,
