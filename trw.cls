@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{trw}[2026/03/07 v0.0.1 Transaction on Rubbish and Waste]
+\ProvidesClass{trw}[2026/03/07 v0.0.2 Transaction on Rubbish and Waste]
 
 % Load base class
 \LoadClass[twocolumn,a4paper,10pt]{article}
@@ -30,11 +30,25 @@
   columnsep=0.8cm
 }
 
+% Journal info (customizable)
+\def\@journalname{TRANSACTION ON RUBBISH AND WASTE}
+\def\@journalvolume{1}
+\def\@journalnumber{1}
+\def\@journaldate{2026}
+
+\newcommand{\journalinfo}[4]{%
+  \gdef\@journalname{#1}%
+  \gdef\@journalvolume{#2}%
+  \gdef\@journalnumber{#3}%
+  \gdef\@journaldate{#4}%
+}
+
 % Header/Footer
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textcolor{trwblue}{\textbf{Transaction on Rubbish and Waste}}}
-\fancyhead[R]{\small\textcolor{trwgray}{Vol.1 No.1 \thepage}}
+\fancyhead[L]{\footnotesize\textcolor{trwblue}{\@journalname}}
+\fancyhead[C]{\footnotesize\textcolor{trwgray}{Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}
+\fancyhead[R]{\footnotesize\textcolor{trwgray}{\thepage}}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}
 
@@ -50,7 +64,9 @@
 
 % Title customization
 \def\@affiliation{}
+\def\@keywords{}
 \newcommand{\affiliation}[1]{\gdef\@affiliation{#1}}
+\newcommand{\keywords}[1]{\gdef\@keywords{#1}}
 
 % Abstract environment
 \def\@abstract{}
@@ -66,6 +82,8 @@
 }
 
 \renewcommand{\@maketitle}{%
+  % Journal header on first page
+  \thispagestyle{fancy}
   \begin{center}
     {\LARGE\bfseries\color{trwblue} \@title \par}
     \vskip 1.5em
@@ -75,6 +93,10 @@
     \vskip 2em
   \end{center}
   \@abstract
+  \ifx\@keywords\empty\else
+    \par\vskip 1em
+    \noindent\footnotesize\textcolor{trwgray}{\textbf{Keywords:} \@keywords}
+  \fi
   \par\vskip 1em
   \noindent\footnotesize
   \textcolor{trwgray}{\textbf{WARNING:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}\par\vskip 2em
