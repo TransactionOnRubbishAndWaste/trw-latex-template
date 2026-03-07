@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{trw}[2026/03/07 v1.1 Transaction on Rubbish and Waste]
+\ProvidesClass{trw}[2026/03/07 v1.2 Transaction on Rubbish and Waste]
 
 % Load base class
 \LoadClass[twocolumn,a4paper,10pt]{article}
@@ -7,8 +7,12 @@
 % Required packages
 \RequirePackage{geometry}
 \RequirePackage{fancyhdr}
-\RequirePackage{hyperref}
 \RequirePackage{xcolor}
+\RequirePackage[numbers,sort&compress]{natbib}
+
+% TRW colors
+\definecolor{trwblue}{RGB}{52, 152, 219}
+\definecolor{trwgray}{RGB}{127, 140, 141}
 
 % Page layout
 \geometry{
@@ -19,10 +23,6 @@
   bottom=3cm,
   columnsep=0.8cm
 }
-
-% TRW colors
-\definecolor{trwblue}{RGB}{52, 152, 219}
-\definecolor{trwgray}{RGB}{127, 140, 141}
 
 % Header/Footer
 \pagestyle{fancy}
@@ -67,7 +67,11 @@
   \textcolor{trwgray}{\textbf{WARNING:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}\par\vskip 2em
 }
 
-% Hyperref setup
+% Bibliography style (IEEEtran)
+\bibliographystyle{ieeetr}
+
+% Hyperref (load last)
+\RequirePackage{hyperref}
 \hypersetup{
   colorlinks=true,
   linkcolor=trwblue,
