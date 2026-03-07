@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{trw}[2026/03/07 v1.2 Transaction on Rubbish and Waste]
+\ProvidesClass{trw}[2026/03/07 v0.0.1 Transaction on Rubbish and Waste]
 
 % Load base class
 \LoadClass[twocolumn,a4paper,10pt]{article}
