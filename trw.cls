@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{trw}[2026/03/07 v1.0 Transaction on Rubbish and Waste]
+\ProvidesClass{trw}[2026/03/07 v1.1 Transaction on Rubbish and Waste]
 
 % Load base class
 \LoadClass[twocolumn,a4paper,10pt]{article}
@@ -46,6 +46,12 @@
 \def\@affiliation{}
 \newcommand{\affiliation}[1]{\gdef\@affiliation{#1}}
 
+% Abstract environment
+\def\@abstract{}
+\renewenvironment{abstract}
+  {\begin{center}\small\textbf{Abstract}\end{center}\begin{quote}\small}
+  {\end{quote}}
+
 \renewcommand{\@maketitle}{%
   \begin{center}
     {\LARGE\bfseries\color{trwblue} \@title \par}
@@ -55,8 +61,10 @@
     {\small\textcolor{trwgray}{\@affiliation} \par}
     \vskip 2em
   \end{center}
-  \par\noindent\footnotesize
-  \textcolor{trwgray}{\textbf{WARNING: Disclaimer:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}\par\vskip 2em
+  \@abstract
+  \par\vskip 1em
+  \noindent\footnotesize
+  \textcolor{trwgray}{\textbf{WARNING:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}\par\vskip 2em
 }
 
 % Hyperref setup
