@@ -10,9 +10,15 @@
 \RequirePackage{xcolor}
 \RequirePackage[numbers,sort&compress]{natbib}
 
+% Graphics and tables
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{caption}
+
 % TRW colors
 \definecolor{trwblue}{RGB}{52, 152, 219}
 \definecolor{trwgray}{RGB}{127, 140, 141}
+\definecolor{trwlight}{RGB}{236, 240, 241}
 
 % Page layout
 \geometry{
@@ -52,6 +58,13 @@
   {\begin{center}\small\textbf{Abstract}\end{center}\begin{quote}\small}
   {\end{quote}}
 
+% Figure and table captions
+\captionsetup{
+  labelfont={color=trwblue,bf},
+  textfont={color=trwgray},
+  labelsep=colon
+}
+
 \renewcommand{\@maketitle}{%
   \begin{center}
     {\LARGE\bfseries\color{trwblue} \@title \par}
@@ -67,7 +80,7 @@
   \textcolor{trwgray}{\textbf{WARNING:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}\par\vskip 2em
 }
 
-% Bibliography style (IEEEtran)
+% Bibliography style
 \bibliographystyle{ieeetr}
 
 % Hyperref (load last)
