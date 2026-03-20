@@ -1,10 +1,12 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{trw}[2026/03/07 v0.0.3 Transaction on Rubbish and Waste]
+\ProvidesClass{trw}[2026/03/07 v0.0.1 Transaction on Rubbish and Waste]
 
 % Load base class with twoside for odd/even pages
 \LoadClass[twocolumn,a4paper,10pt,twoside]{article}
 
 % Required packages
+\RequirePackage[T1]{fontenc}
+\RequirePackage{float}
 \RequirePackage{geometry}
 \RequirePackage{fancyhdr}
 \RequirePackage{xcolor}
@@ -12,9 +14,11 @@
 \RequirePackage{graphicx}
 \RequirePackage{booktabs}
 \RequirePackage{caption}
+\RequirePackage{mathptmx}
 
 % TRW colors
 \definecolor{trwblue}{RGB}{52, 152, 219}
+\definecolor{trwblack}{RGB}{0, 0, 0}
 \definecolor{trwgray}{RGB}{127, 140, 141}
 
 % Page layout
@@ -24,22 +28,22 @@
   right=2.5cm,
   top=3cm,
   bottom=3cm,
-  columnsep=0.8cm
+  columnsep=1.2cm
 }
 
-\setlength{\headheight}{1\baselineskip}
+\setlength{\headheight}{20pt}
+\addtolength{\topmargin}{-6pt}
 
 % Journal info
 \def\@journalname{TRANSACTION ON RUBBISH AND WASTE}
 \def\@journalvolume{1}
 \def\@journalnumber{1}
-\def\@journaldate{2026}
+\def\@journaldate{March 2026}
 
-\newcommand{\journalinfo}[4]{%
-  \gdef\@journalname{#1}%
-  \gdef\@journalvolume{#2}%
-  \gdef\@journalnumber{#3}%
-  \gdef\@journaldate{#4}%
+\newcommand{\journalinfo}[3]{%
+  \gdef\@journalvolume{#1}%
+  \gdef\@journalnumber{#2}%
+  \gdef\@journaldate{#3}%
 }
 
 % Section styling
@@ -61,27 +65,28 @@
 % Abstract environment
 \def\@abstract{}
 \renewenvironment{abstract}
-  {\begin{center}\small\textbf{Abstract}\end{center}\begin{quote}\small}
-  {\end{quote}}
+  {\begin{center}\small\textbf{Abstract}\end{center}\small\noindent}
+  {\par\vspace{0.5em}}
 
 % Caption styling
 \captionsetup{
-  labelfont={color=trwblue,bf},
-  textfont={color=trwgray},
-  labelsep=colon
+  labelfont={color=trwblack,bf},
+  textfont={color=trwblack},
+  labelsep=colon,
+  font=small
 }
 
 % Setup headers for normal pages (odd/even)
 \def\trw@setupheaders{%
   \fancyhf{}%
   % Odd pages: journal name left, page number right
-  \fancyhead[LO]{\footnotesize\textcolor{trwblue}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
-  \fancyhead[RO]{\footnotesize\textcolor{trwgray}{\thepage}}%
+  \fancyhead[LO]{\footnotesize\textcolor{trwblack}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
+  \fancyhead[RO]{\footnotesize\textcolor{trwblack}{\thepage}}%
   % Even pages: page number left, journal name + vol info right
-  \fancyhead[LE]{\footnotesize\textcolor{trwgray}{\thepage}}%
-  \fancyhead[RE]{\footnotesize\textcolor{trwblue}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
+  \fancyhead[LE]{\footnotesize\textcolor{trwblack}{\thepage}}%
+  \fancyhead[RE]{\footnotesize\textcolor{trwblack}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
   \renewcommand{\headrulewidth}{0.4pt}%
-  \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}%
+  \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblack}\leaders\hrule height \headrulewidth\hfill}}%
 }
 
 % Setup headers globally
@@ -92,17 +97,17 @@
 \def\@maketitle{%
   \vspace*{2em}%
   \begin{center}%
-    {\LARGE\bfseries\color{trwblue} \@title \par}%
+    {\LARGE\bfseries\color{trwblack} \@title \par}%
     \vskip 1.5em%
     {\large \@author \par}%
     \vskip 1em%
-    {\small\textcolor{trwgray}{\@affiliation} \par}%
+    {\small\textcolor{trwblack}{\@affiliation} \par}%
     \vskip 2em%
   \end{center}%
   \@abstract
   \ifx\@keywords\empty\else
     \par\vskip 1em%
-    \noindent\footnotesize\textcolor{trwgray}{\textbf{Keywords:} \@keywords}%
+    \noindent\footnotesize\textcolor{trwblack}{\textbf{Keywords:} \@keywords}%
   \fi
   \par\vskip 1em%
   \noindent\footnotesize%
