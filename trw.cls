@@ -27,6 +27,8 @@
   columnsep=0.8cm
 }
 
+\setlength{\headheight}{1\baselineskip}
+
 % Journal info
 \def\@journalname{TRANSACTION ON RUBBISH AND WASTE}
 \def\@journalvolume{1}
@@ -73,20 +75,11 @@
 \def\trw@setupheaders{%
   \fancyhf{}%
   % Odd pages: journal name left, page number right
-  \fancyhead[LO]{\footnotesize\textcolor{trwblue}{\@journalname}}%
+  \fancyhead[LO]{\footnotesize\textcolor{trwblue}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
   \fancyhead[RO]{\footnotesize\textcolor{trwgray}{\thepage}}%
   % Even pages: page number left, journal name + vol info right
   \fancyhead[LE]{\footnotesize\textcolor{trwgray}{\thepage}}%
   \fancyhead[RE]{\footnotesize\textcolor{trwblue}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
-  \renewcommand{\headrulewidth}{0.4pt}%
-  \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}%
-}
-
-% First page style: page number left, journal info right (same as even page)
-\fancypagestyle{firstpage}{%
-  \fancyhf{}%
-  \fancyhead[L]{\footnotesize\textcolor{trwgray}{\thepage}}%
-  \fancyhead[R]{\footnotesize\textcolor{trwblue}{\@journalname\ | Vol. \@journalvolume, No. \@journalnumber, \@journaldate}}%
   \renewcommand{\headrulewidth}{0.4pt}%
   \renewcommand{\headrule}{\hbox to\headwidth{\color{trwblue}\leaders\hrule height \headrulewidth\hfill}}%
 }
@@ -97,9 +90,6 @@
 
 % Redefine maketitle
 \def\@maketitle{%
-  \newpage
-  \trw@setupheaders
-  \thispagestyle{firstpage}%
   \vspace*{2em}%
   \begin{center}%
     {\LARGE\bfseries\color{trwblue} \@title \par}%
@@ -116,7 +106,6 @@
   \fi
   \par\vskip 1em%
   \noindent\footnotesize%
-  \textcolor{trwgray}{\textbf{WARNING:} This paper is published in Transaction on Rubbish and Waste, an entertainment journal. Nothing herein should be taken seriously.}%
   \par\vskip 2em%
 }
 
@@ -131,5 +120,7 @@
   citecolor=trwblue,
   urlcolor=trwblue
 }
+
+\g@addto@macro\maketitle{\thispagestyle{fancy}}
 
 \endinput
